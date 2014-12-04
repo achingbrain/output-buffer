@@ -4,7 +4,8 @@
   "description": "Buffers your outputs and calls a function when a linebreak is found",
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover _mocha"
+    "test": "istanbul cover _mocha",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/achingbrain/outputbuffer",
   "devDependencies": {
+    "coveralls": "^2.8",
     "istanbul": "^0.3.0",
     "mocha": "^2.0",
     "chai": "^1.0",
