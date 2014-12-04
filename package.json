@@ -1,5 +1,5 @@
 {
-  "name": "outputbuffer",
+  "name": "output-buffer",
   "version": "1.0.0",
   "description": "Buffers your outputs and calls a function when a linebreak is found",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/achingbrain/outputbuffer.git"
+    "url": "https://github.com/achingbrain/output-buffer.git"
   },
   "keywords": [
     "output",
@@ -18,9 +18,9 @@
   "author": "Alex Potsides <alex@achingbrain.net>",
   "license": "BSD",
   "bugs": {
-    "url": "https://github.com/achingbrain/outputbuffer/issues"
+    "url": "https://github.com/achingbrain/output-buffer/issues"
   },
-  "homepage": "https://github.com/achingbrain/outputbuffer",
+  "homepage": "https://github.com/achingbrain/output-buffer",
   "devDependencies": {
     "coveralls": "^2.8",
     "istanbul": "^0.3.0",

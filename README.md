@@ -1,6 +1,6 @@
 # OutputBuffer
 
-[![Build Status](https://travis-ci.org/achingbrain/outputbuffer.svg)](https://travis-ci.org/achingbrain/outputbuffer) [![Dependency Status](https://david-dm.org/achingbrain/outputbuffer.svg)](https://david-dm.org/achingbrain/outputbuffer) [![Coverage Status](https://img.shields.io/coveralls/achingbrain/outputbuffer/master.svg)](https://coveralls.io/r/achingbrain/outputbuffer)
+[![Build Status](https://travis-ci.org/achingbrain/output-buffer.svg)](https://travis-ci.org/achingbrain/output-buffer) [![Dependency Status](https://david-dm.org/achingbrain/output-buffer.svg)](https://david-dm.org/achingbrain/output-buffer) [![Coverage Status](https://img.shields.io/coveralls/achingbrain/output-buffer/master.svg)](https://coveralls.io/r/achingbrain/output-buffer)
 
 
 Buffers your output.  When newlines are detected, it calls the function passed to the constructor with the line of data.
