@@ -1,0 +1,30 @@
+{
+  "name": "outputbuffer",
+  "version": "1.0.0",
+  "description": "Buffers your outputs and calls a function when a linebreak is found",
+  "main": "index.js",
+  "scripts": {
+    "test": "istanbul cover _mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/achingbrain/outputbuffer.git"
+  },
+  "keywords": [
+    "output",
+    "buffer"
+  ],
+  "author": "Alex Potsides <alex@achingbrain.net>",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/achingbrain/outputbuffer/issues"
+  },
+  "homepage": "https://github.com/achingbrain/outputbuffer",
+  "devDependencies": {
+    "istanbul": "^0.3.0",
+    "mocha": "^2.0",
+    "chai": "^1.0",
+    "sinon": "^1.8",
+    "testsuite": "^1.0"
+  }
+}
