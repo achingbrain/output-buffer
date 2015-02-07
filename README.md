@@ -8,7 +8,7 @@ Buffers your output.  When newlines are detected, it calls the function passed t
 ## Usage
 
 ```javascript
-var OutputBuffer = require('outputbuffer')
+var OutputBuffer = require('output-buffer')
 
 var buffer = new OutputBuffer(console.info)
 buffer.append('foo')
