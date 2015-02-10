@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "istanbul cover _mocha",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "benchmark": "mocha benchmark/benchmark.js"
   },
   "repository": {
     "type": "git",
@@ -22,10 +23,12 @@
   },
   "homepage": "https://github.com/achingbrain/output-buffer",
   "devDependencies": {
+    "beautify-benchmark": "^0.2.4",
+    "benchmark": "^1.0.0",
+    "chai": "^1.0",
     "coveralls": "^2.8",
     "istanbul": "^0.3.0",
-    "mocha": "^2.0",
-    "chai": "^1.0",
+    "mocha": "^2.1.0",
     "sinon": "^1.8",
     "testsuite": "^1.0"
   }
