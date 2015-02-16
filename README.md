@@ -18,7 +18,9 @@ buffer.append('ba\nr') // prints fooba
 buffer.flush() // prints 'r'
 ```
 
-The default line separator handles CR, LF and CRLF, but a custom separator (string or regex) can be supplied as an optional second argument to the constructor e.g.:
+### Specifying a line seperator
+
+The default line separator is the regex `/\r\n|\r|\n/` - this will handle CRLF, CR or LF. A custom separator (string or regex) can be supplied as a second argument to the constructor, e.g.:
 
 ```javascript
 var buffer = new OutputBuffer(console.info, '\r\n')
@@ -27,5 +29,5 @@ var buffer = new OutputBuffer(console.info, '\r\n')
 or:
 
 ```javascript
-var buffer = new OutputBuffer(console.info, /\r|\n/)
+var buffer = new OutputBuffer(console.info, /\r\n/)
 ```
