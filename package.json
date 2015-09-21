@@ -1,6 +1,6 @@
 {
   "name": "output-buffer",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Buffers your outputs and calls a function when a linebreak is found",
   "main": "index.js",
   "scripts": {
