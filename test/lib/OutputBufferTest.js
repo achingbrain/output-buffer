@@ -268,4 +268,52 @@ describe('OutputBuffer', function() {
     expect(output.getCall(1).args[0]).to.equal('bar')
     expect(output.getCall(2).args[0]).to.equal('baz')
   })
+
+  it('should buffer buffers', function() {
+    var output = sinon.stub()
+
+    var buffer = new OutputBuffer(output)
+    buffer.append(new Buffer('foo'))
+    buffer.append(new Buffer('foo'))
+    buffer.append(new Buffer('fo\no'))
+    buffer.append(new Buffer('foo'))
+    buffer.flush()
+    buffer.flush()
+
+    expect(output.callCount).to.equal(2)
+    expect(output.getCall(0).args[0]).to.equal('foofoofo')
+    expect(output.getCall(1).args[0]).to.equal('ofoo')
+  })
+
+  it('should buffer buffers with a string separator', function() {
+    var output = sinon.stub()
+
+    var buffer = new OutputBuffer(output, '-')
+    buffer.append(new Buffer('foo'))
+    buffer.append(new Buffer('foo'))
+    buffer.append(new Buffer('fo-o'))
+    buffer.append(new Buffer('foo'))
+    buffer.flush()
+    buffer.flush()
+
+    expect(output.callCount).to.equal(2)
+    expect(output.getCall(0).args[0]).to.equal('foofoofo')
+    expect(output.getCall(1).args[0]).to.equal('ofoo')
+  })
+
+  it('should buffer output split with multi character string', function() {
+    var output = sinon.stub()
+
+    var buffer = new OutputBuffer(output, '--break--')
+    buffer.append('foo')
+    buffer.append('foo')
+    buffer.append('fo--break--o')
+    buffer.append('foo')
+    buffer.flush()
+    buffer.flush()
+
+    expect(output.callCount).to.equal(2)
+    expect(output.getCall(0).args[0]).to.equal('foofoofo')
+    expect(output.getCall(1).args[0]).to.equal('ofoo')
+  })
 })
