@@ -1,11 +1,11 @@
-var expect = require('chai').expect,
-  sinon = require('sinon'),
-  path = require('path'),
-  OutputBuffer = require('../../lib/OutputBuffer')
+var expect = require('chai').expect
+var sinon = require('sinon')
+var OutputBuffer = require('../../lib/OutputBuffer')
+var describe = require('mocha').describe
+var it = require('mocha').it
 
-describe('OutputBuffer', function() {
-
-  it('should buffer output', function() {
+describe('OutputBuffer', function () {
+  it('should buffer output', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -21,7 +21,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(1).args[0]).to.equal('ofoo')
   })
 
-  it('should not emit an unterminated line without flush', function() {
+  it('should not emit an unterminated line without flush', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -32,7 +32,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(1).args[0]).to.equal('bar')
   })
 
-  it('should emit an unterminated line with flush', function() {
+  it('should emit an unterminated line with flush', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -45,7 +45,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(2).args[0]).to.equal('baz')
   })
 
-  it('should flush a trailing zero', function() {
+  it('should flush a trailing zero', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -59,7 +59,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(3).args[0]).to.equal('0')
   })
 
-  it('should split lines on CR', function() {
+  it('should split lines on CR', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -72,7 +72,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(2).args[0]).to.equal('baz')
   })
 
-  it('should split lines on LF', function() {
+  it('should split lines on LF', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -85,7 +85,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(2).args[0]).to.equal('baz')
   })
 
-  it('should split lines on CRLF', function() {
+  it('should split lines on CRLF', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -98,7 +98,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(2).args[0]).to.equal('baz')
   })
 
-  it('should split lines on any combination of CR, LF and CRLF', function() {
+  it('should split lines on any combination of CR, LF and CRLF', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -112,7 +112,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(3).args[0]).to.equal('quux')
   })
 
-  it('should handle a leading line terminator', function() {
+  it('should handle a leading line terminator', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -126,7 +126,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(3).args[0]).to.equal('baz')
   })
 
-  it('should handle a trailing line terminator', function() {
+  it('should handle a trailing line terminator', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -139,7 +139,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(2).args[0]).to.equal('baz')
   })
 
-  it('should handle a leading and trailing line terminator', function() {
+  it('should handle a leading and trailing line terminator', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -152,7 +152,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(2).args[0]).to.equal('bar')
   })
 
-  it('should treat LFCR as two line separators', function() {
+  it('should treat LFCR as two line separators', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -165,7 +165,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(2).args[0]).to.equal('bar')
   })
 
-  it('should treat LFCRLF as two line separators', function() {
+  it('should treat LFCRLF as two line separators', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -178,20 +178,20 @@ describe('OutputBuffer', function() {
     expect(output.getCall(2).args[0]).to.equal('bar')
   })
 
-  it('should handle empty strings', function() {
+  it('should handle empty strings', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
-    buffer.append('foo\n');
-    buffer.append('');
-    buffer.append('\nbar');
-    buffer.append('');
-    buffer.append('');
-    buffer.append('\nbaz\n');
-    buffer.append('');
-    buffer.append('');
-    buffer.append('');
-    buffer.append('quux');
+    buffer.append('foo\n')
+    buffer.append('')
+    buffer.append('\nbar')
+    buffer.append('')
+    buffer.append('')
+    buffer.append('\nbaz\n')
+    buffer.append('')
+    buffer.append('')
+    buffer.append('')
+    buffer.append('quux')
     buffer.flush()
 
     expect(output.callCount).to.equal(5)
@@ -202,13 +202,13 @@ describe('OutputBuffer', function() {
     expect(output.getCall(4).args[0]).to.equal('quux')
   })
 
-  it('should ignore null values', function() {
+  it('should ignore null values', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
-    buffer.append('foo');
-    buffer.append(null);
-    buffer.append('bar\nbaz');
+    buffer.append('foo')
+    buffer.append(null)
+    buffer.append('bar\nbaz')
     buffer.flush()
 
     expect(output.callCount).to.equal(2)
@@ -216,13 +216,13 @@ describe('OutputBuffer', function() {
     expect(output.getCall(1).args[0]).to.equal('baz')
   })
 
-  it('should ignore undefined values', function() {
+  it('should ignore undefined values', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
-    buffer.append('foo');
-    buffer.append(undefined);
-    buffer.append('bar\nbaz');
+    buffer.append('foo')
+    buffer.append(undefined)
+    buffer.append('bar\nbaz')
     buffer.flush()
 
     expect(output.callCount).to.equal(2)
@@ -230,11 +230,11 @@ describe('OutputBuffer', function() {
     expect(output.getCall(1).args[0]).to.equal('baz')
   })
 
-  it('should allow the line separator to be supplied as a string', function() {
+  it('should allow the line separator to be supplied as a string', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output, '\n')
-    buffer.append('foo\r\nbar\r\nbaz');
+    buffer.append('foo\r\nbar\r\nbaz')
     buffer.flush()
 
     expect(output.callCount).to.equal(3)
@@ -243,11 +243,11 @@ describe('OutputBuffer', function() {
     expect(output.getCall(2).args[0]).to.equal('baz')
   })
 
-  it('should allow the line separator to be supplied as a regex', function() {
+  it('should allow the line separator to be supplied as a regex', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output, /\n/)
-    buffer.append('foo\r\nbar\r\nbaz');
+    buffer.append('foo\r\nbar\r\nbaz')
     buffer.flush()
 
     expect(output.callCount).to.equal(3)
@@ -256,11 +256,11 @@ describe('OutputBuffer', function() {
     expect(output.getCall(2).args[0]).to.equal('baz')
   })
 
-  it('should use the default line separator if the separator is falsey', function() {
+  it('should use the default line separator if the separator is falsey', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output, '')
-    buffer.append('foo\r\nbar\r\nbaz');
+    buffer.append('foo\r\nbar\r\nbaz')
     buffer.flush()
 
     expect(output.callCount).to.equal(3)
@@ -269,7 +269,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(2).args[0]).to.equal('baz')
   })
 
-  it('should buffer buffers', function() {
+  it('should buffer buffers', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output)
@@ -285,7 +285,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(1).args[0]).to.equal('ofoo')
   })
 
-  it('should buffer buffers with a string separator', function() {
+  it('should buffer buffers with a string separator', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output, '-')
@@ -301,7 +301,7 @@ describe('OutputBuffer', function() {
     expect(output.getCall(1).args[0]).to.equal('ofoo')
   })
 
-  it('should buffer output split with multi character string', function() {
+  it('should buffer output split with multi character string', function () {
     var output = sinon.stub()
 
     var buffer = new OutputBuffer(output, '--break--')
