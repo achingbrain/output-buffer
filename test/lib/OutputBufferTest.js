@@ -316,4 +316,20 @@ describe('OutputBuffer', function () {
     expect(output.getCall(0).args[0]).to.equal('foofoofo')
     expect(output.getCall(1).args[0]).to.equal('ofoo')
   })
+
+  it('should return how many characters are currently buffered', function () {
+    var output = sinon.stub()
+
+    var buffer = new OutputBuffer(output)
+
+    expect(buffer.size()).to.equal(0)
+
+    buffer.append('foo')
+
+    expect(buffer.size()).to.equal(3)
+
+    buffer.flush()
+
+    expect(buffer.size()).to.equal(0)
+  })
 })

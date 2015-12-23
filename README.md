@@ -18,7 +18,7 @@ buffer.append('ba\nr') // prints fooba
 buffer.flush() // prints 'r'
 ```
 
-### Specifying a line seperator
+### Specifying a line separator
 
 The default line separator is the regex `/\r\n|\r|\n/` - this will handle CRLF, CR or LF.
 
@@ -32,4 +32,21 @@ or:
 
 ```javascript
 var buffer = new OutputBuffer(console.info, /\r\n/)
+```
+### Finding the size of the buffer
+
+`buffer.size()` will return how many characters have yet to be passed to the callback.
+
+```javascript
+var buffer = new OutputBuffer(console.info, '\r\n')
+
+console.info(buffer.size()) // prints 0
+
+buffer.append('foo')
+
+console.info(buffer.size()) // prints 3
+
+buffer.append('bar/n')
+
+console.info(buffer.size()) // prints 0
 ```
