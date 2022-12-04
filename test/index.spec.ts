@@ -1,14 +1,13 @@
-var expect = require('chai').expect
-var sinon = require('sinon')
-var OutputBuffer = require('../../lib/OutputBuffer')
-var describe = require('mocha').describe
-var it = require('mocha').it
+import { expect } from 'aegir/chai'
+import sinon from 'sinon'
+import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string'
+import { OutputBuffer } from '../src/index.js'
 
 describe('OutputBuffer', function () {
   it('should buffer output', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo')
     buffer.append('foo')
     buffer.append('fo\no')
@@ -22,9 +21,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should not emit an unterminated line without flush', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo\nbar\nbaz')
 
     expect(output.callCount).to.equal(2)
@@ -33,9 +32,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should emit an unterminated line with flush', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo\nbar\nbaz')
     buffer.flush()
 
@@ -46,9 +45,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should flush a trailing zero', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo\nbar\nbaz\n0')
     buffer.flush()
 
@@ -60,9 +59,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should split lines on CR', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo\rbar\rbaz')
     buffer.flush()
 
@@ -73,9 +72,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should split lines on LF', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo\nbar\nbaz')
     buffer.flush()
 
@@ -86,9 +85,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should split lines on CRLF', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo\r\nbar\r\nbaz')
     buffer.flush()
 
@@ -99,9 +98,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should split lines on any combination of CR, LF and CRLF', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo\rbar\nbaz\r\nquux')
     buffer.flush()
 
@@ -113,9 +112,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should handle a leading line terminator', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('\rfoo\nbar\r\nbaz')
     buffer.flush()
 
@@ -127,9 +126,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should handle a trailing line terminator', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo\rbar\nbaz\r\n')
     buffer.flush()
 
@@ -140,9 +139,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should handle a leading and trailing line terminator', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('\rfoo\nbar\r\n')
     buffer.flush()
 
@@ -153,9 +152,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should treat LFCR as two line separators', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo\n\rbar')
     buffer.flush()
 
@@ -166,9 +165,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should treat LFCRLF as two line separators', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo\n\r\nbar')
     buffer.flush()
 
@@ -179,9 +178,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should handle empty strings', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo\n')
     buffer.append('')
     buffer.append('\nbar')
@@ -203,10 +202,11 @@ describe('OutputBuffer', function () {
   })
 
   it('should ignore null values', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo')
+    // @ts-expect-error incorrect type
     buffer.append(null)
     buffer.append('bar\nbaz')
     buffer.flush()
@@ -217,10 +217,11 @@ describe('OutputBuffer', function () {
   })
 
   it('should ignore undefined values', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
     buffer.append('foo')
+    // @ts-expect-error incorrect type
     buffer.append(undefined)
     buffer.append('bar\nbaz')
     buffer.flush()
@@ -231,9 +232,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should allow the line separator to be supplied as a string', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output, '\n')
+    const buffer = new OutputBuffer(output, '\n')
     buffer.append('foo\r\nbar\r\nbaz')
     buffer.flush()
 
@@ -244,9 +245,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should allow the line separator to be supplied as a regex', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output, /\n/)
+    const buffer = new OutputBuffer(output, /\n/)
     buffer.append('foo\r\nbar\r\nbaz')
     buffer.flush()
 
@@ -257,9 +258,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should use the default line separator if the separator is falsey', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output, '')
+    const buffer = new OutputBuffer(output, '')
     buffer.append('foo\r\nbar\r\nbaz')
     buffer.flush()
 
@@ -270,13 +271,13 @@ describe('OutputBuffer', function () {
   })
 
   it('should buffer buffers', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
-    buffer.append(new Buffer('foo'))
-    buffer.append(new Buffer('foo'))
-    buffer.append(new Buffer('fo\no'))
-    buffer.append(new Buffer('foo'))
+    const buffer = new OutputBuffer(output)
+    buffer.append(uint8ArrayFromString('foo'))
+    buffer.append(uint8ArrayFromString('foo'))
+    buffer.append(uint8ArrayFromString('fo\no'))
+    buffer.append(uint8ArrayFromString('foo'))
     buffer.flush()
     buffer.flush()
 
@@ -286,13 +287,13 @@ describe('OutputBuffer', function () {
   })
 
   it('should buffer buffers with a string separator', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output, '-')
-    buffer.append(new Buffer('foo'))
-    buffer.append(new Buffer('foo'))
-    buffer.append(new Buffer('fo-o'))
-    buffer.append(new Buffer('foo'))
+    const buffer = new OutputBuffer(output, '-')
+    buffer.append(uint8ArrayFromString('foo'))
+    buffer.append(uint8ArrayFromString('foo'))
+    buffer.append(uint8ArrayFromString('fo-o'))
+    buffer.append(uint8ArrayFromString('foo'))
     buffer.flush()
     buffer.flush()
 
@@ -302,9 +303,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should buffer output split with multi character string', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output, '--break--')
+    const buffer = new OutputBuffer(output, '--break--')
     buffer.append('foo')
     buffer.append('foo')
     buffer.append('fo--break--o')
@@ -318,9 +319,9 @@ describe('OutputBuffer', function () {
   })
 
   it('should return how many characters are currently buffered', function () {
-    var output = sinon.stub()
+    const output = sinon.stub()
 
-    var buffer = new OutputBuffer(output)
+    const buffer = new OutputBuffer(output)
 
     expect(buffer.size()).to.equal(0)
 

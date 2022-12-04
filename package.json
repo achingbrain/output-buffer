@@ -2,36 +2,148 @@
   "name": "output-buffer",
   "version": "1.2.0",
   "description": "Buffers your outputs and calls a function when a linebreak is found",
-  "main": "index.js",
-  "scripts": {
-    "lint": "standard",
-    "test": "mocha --recursive",
-    "test:coverage": "istanbul cover _mocha -- --recursive",
-    "test:coverage:check": "istanbul cover _mocha -- --recursive && istanbul check-coverage --statement 100 --branch 100 --function 100",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
-  },
+  "author": "Alex Potsides <alex@achingbrain.net>",
+  "license": "Apache-2.0 OR MIT",
+  "homepage": "https://github.com/achingbrain/output-buffer#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/achingbrain/output-buffer.git"
+    "url": "git+https://github.com/achingbrain/output-buffer.git"
   },
-  "keywords": [
-    "output",
-    "buffer"
-  ],
-  "author": "Alex Potsides <alex@achingbrain.net>",
-  "license": "BSD",
   "bugs": {
     "url": "https://github.com/achingbrain/output-buffer/issues"
   },
-  "homepage": "https://github.com/achingbrain/output-buffer",
+  "keywords": [
+    "buffer",
+    "output"
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
+  "type": "module",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "src",
+    "dist/src",
+    "!dist/test",
+    "!**/*.tsbuildinfo"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    }
+  },
+  "eslintConfig": {
+    "extends": "ipfs",
+    "parserOptions": {
+      "sourceType": "module"
+    }
+  },
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits",
+          "releaseRules": [
+            {
+              "breaking": true,
+              "release": "major"
+            },
+            {
+              "revert": true,
+              "release": "patch"
+            },
+            {
+              "type": "feat",
+              "release": "minor"
+            },
+            {
+              "type": "fix",
+              "release": "patch"
+            },
+            {
+              "type": "docs",
+              "release": "patch"
+            },
+            {
+              "type": "test",
+              "release": "patch"
+            },
+            {
+              "type": "deps",
+              "release": "patch"
+            },
+            {
+              "scope": "no-release",
+              "release": false
+            }
+          ]
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits",
+          "presetConfig": {
+            "types": [
+              {
+                "type": "feat",
+                "section": "Features"
+              },
+              {
+                "type": "fix",
+                "section": "Bug Fixes"
+              },
+              {
+                "type": "chore",
+                "section": "Trivial Changes"
+              },
+              {
+                "type": "docs",
+                "section": "Documentation"
+              },
+              {
+                "type": "deps",
+                "section": "Dependencies"
+              },
+              {
+                "type": "test",
+                "section": "Tests"
+              }
+            ]
+          }
+        }
+      ],
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      "@semantic-release/git"
+    ]
+  },
+  "scripts": {
+    "lint": "aegir lint",
+    "dep-check": "aegir dep-check",
+    "build": "aegir build",
+    "test": "aegir test",
+    "test:chrome": "aegir test -t browser --cov",
+    "test:chrome-webworker": "aegir test -t webworker",
+    "test:firefox": "aegir test -t browser -- --browser firefox",
+    "test:firefox-webworker": "aegir test -t webworker -- --browser firefox",
+    "test:node": "aegir test -t node --cov",
+    "test:electron-main": "aegir test -t electron-main",
+    "release": "aegir release"
+  },
+  "dependencies": {
+    "uint8arrays": "^4.0.2"
+  },
   "devDependencies": {
-    "beautify-benchmark": "^0.2.4",
-    "benchmark": "^1.0.0",
-    "chai": "^1.0",
-    "coveralls": "^2.8",
-    "istanbul": "^0.3.0",
-    "mocha": "^2.1.0",
-    "sinon": "^1.8"
+    "aegir": "^37.5.6",
+    "sinon": "^15.0.0"
   },
   "pre-commit": [
     "lint",
