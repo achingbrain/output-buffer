@@ -12,7 +12,7 @@ export class OutputBuffer {
     this._out = out
     this._sep = sep ?? DEFAULT_SEPARATOR
 
-    if (!Boolean(this._sep)) {
+    if (!this._sep) { // eslint-disable-line @typescript-eslint/strict-boolean-expressions
       this._sep = DEFAULT_SEPARATOR
     }
 
