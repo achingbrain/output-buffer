@@ -1,6 +1,6 @@
 {
   "name": "output-buffer",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Buffers your outputs and calls a function when a linebreak is found",
   "author": "Alex Potsides <alex@achingbrain.net>",
   "license": "Apache-2.0 OR MIT",
